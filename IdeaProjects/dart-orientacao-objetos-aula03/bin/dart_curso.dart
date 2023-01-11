@@ -11,6 +11,21 @@ void main() {
   } else {
     isMadura = false;
   }
+
+  Legumes mandioca1 = Legumes('Macaxeira', 1200.0, 'Marrom', true);
+  Fruta banana1 = Fruta('Banana', 75, 'Amarela', 'doce', 12);
+  Nozes macadamia1 = Nozes('Macadâmia', 2, 'Branco amarelado', 'doce', 20, 35);
+  Citricas limao1 = Citricas('Limão', 100, 'verde', 'azedo', 5, 9);
+
+  mandioca1.printAlimento();
+  banana1.printAlimento();
+  macadamia1.printAlimento();
+  limao1.printAlimento();
+
+  mandioca1.cozinhar();
+  limao1.fazerSuco();
+  banana1.separarIngredientes();
+  macadamia1.fazerMassa();
 }
 
 bool funcEstaMadura(int dias) {
@@ -37,7 +52,7 @@ int funcQuantosDiasMadura(int dias) {
   return quantosDiasFaltam;
 }
 
-class Fruta extends Alimento {
+class Fruta extends Alimento implements Bolo {
   String sabor;
   int diasDesdeColheita;
   bool? isMadura;
@@ -57,6 +72,22 @@ class Fruta extends Alimento {
   void fazerSuco() {
     print('Você fez um otimo suco de $nome');
   }
+
+  @override
+  void assar() {
+    print('Colocar no forno');
+
+  }
+
+  @override
+  void fazerMassa() {
+    print('Misturar a fruta com farinha, açucar e ovos...');
+  }
+
+  @override
+  void separarIngredientes() {
+    print('Catar a fruta');
+  }
 }
 
 class Alimento {
@@ -71,7 +102,7 @@ class Alimento {
   }
 }
 
-class Legumes extends Alimento {
+class Legumes extends Alimento implements Bolo {
   bool isPrecisaCozinhar;
 
   Legumes(String nome, double peso, String cor, this.isPrecisaCozinhar)
@@ -84,28 +115,60 @@ class Legumes extends Alimento {
       print('Nem precisa cozinhar');
     }
   }
+
+  @override
+  void assar() {
+    // TODO: implement assar
+  }
+
+  @override
+  void fazerMassa() {
+    // TODO: implement fazerMassa
+  }
+
+  @override
+  void separarIngredientes() {
+    // TODO: implement separarIngredientes
+  }
 }
 
 class Citricas extends Fruta {
   double nivelAzedo;
 
-  Citricas(String nome, double peso, String cor,String sabor, int diasDesdeColheita,
-      this.nivelAzedo)
+  Citricas(String nome, double peso, String cor, String sabor,
+      int diasDesdeColheita, this.nivelAzedo)
       : super(nome, peso, cor, sabor, diasDesdeColheita);
 
-  void existeRefri(bool existe){
-    if(existe){
-      print('Existe refrigerante de $nome.');
-    }else{
-      print('Não existe refri de $nome.');
+  void existeRefri(bool existe) {
+    if (existe) {
+      print('Existe refrigerante de $nome .');
+    } else {
+      print('Não existe refri de $nome .');
     }
   }
 }
 
 class Nozes extends Fruta {
-
   double porcentagemOleoNatural;
 
-  Nozes(nome, peso, cor, this.diasDesdeColheita, this.isMadura,
-      this.porcentagemOleoNatural);
+  Nozes(String nome, double peso, String cor, String sabor,
+      int diasDesdeColheita, this.porcentagemOleoNatural)
+      : super(nome, peso, cor, sabor, diasDesdeColheita);
+
+  @override
+  void fazerMassa(){
+    print('Tirar a casca');
+    super.fazerMassa();
+}
+}
+
+abstract class Bolo {
+  //separo os ingredientes
+  void separarIngredientes();
+
+  //faço a massa
+  void fazerMassa();
+
+  //coloco para assar
+  void assar();
 }
