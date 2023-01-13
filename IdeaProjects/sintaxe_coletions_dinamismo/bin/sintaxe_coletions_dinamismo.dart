@@ -2,11 +2,17 @@ void main(List<String> arguments) {
   escolherMeioTransporte(Transporte.andando);
   Set<String> registrosVisitados = <String>{};
   registrosVisitados = registrarDestinos('São Paulo', registrosVisitados);
-  registrosVisitados = registrarDestinos('Belém', registrosVisitados);
-  registrosVisitados = registrarDestinos('Rio de janeiro', registrosVisitados);
-  registrosVisitados = registrarDestinos('São Paulo', registrosVisitados);
-  registrosVisitados = registrarDestinos('Recife', registrosVisitados);
-  print(registrosVisitados);
+
+  Map<String, dynamic> registrarPrecos = {};
+
+  registrarPrecos['São Paulo'] = 1200;
+  registrarPrecos['Rio de Janeiro'] = 1500;
+  registrarPrecos['Recife'] = 3500;
+  registrarPrecos['Belém'] = "Caro";
+
+  registrarPrecos.remove('São Paulo');
+
+  print(registrarPrecos);
 }
 
 Set<String> registrarDestinos(String destino, Set<String> banco) {
@@ -31,3 +37,25 @@ void escolherMeioTransporte(Transporte locomocao) {
 }
 
 enum Transporte { carro, bike, andando, skate, aviao, trem }
+
+class Pessoa {
+  String nome;
+  int idade;
+  bool estaAutenticada;
+
+  Pessoa(this.nome, this.idade, this.estaAutenticada);
+
+  Map<String, dynamic> toMap() {
+    // Map<String, dynamic> resultado = {};
+    // resultado['nome'] = this.nome;
+    // resultado['idade'] = this.idade;
+    // resultado[estaAutenticada] = this.estaAutenticada;
+    // return resultado;
+    return {
+      'nome':this.nome,
+      'idade':this.idade,
+      'estaAutenticada': this.estaAutenticada
+    };
+  }
+
+}
