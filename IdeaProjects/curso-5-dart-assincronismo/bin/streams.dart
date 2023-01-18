@@ -1,6 +1,6 @@
 import 'dart:async';
 
-void main() {
+void main() async {
   Stream myStream(int interval, [int? maxCount]) async* {
     int i = 1;
     while (i != maxCount) {
@@ -12,15 +12,30 @@ void main() {
     print('The Stream is finished');
   }
 
-  StreamSubscription mySubscriber = myStream(1, 10).listen((event) {
+  var kakoStream = myStream(1).asBroadcastStream();
+  StreamSubscription mySubscriber = kakoStream.listen((event) {
     if (event.isEven) {
       print('This Number is Even!');
     }
   }, onError: (e) {
     print('An error happend $e');
-  }, onDone: (){
+  }, onDone: () {
     print('The subscriber is gone');
   });
+
+  kakoStream.map((event) => 'Subscriber 2 watching: $event').listen(print);
+
+  await Future.delayed(Duration(seconds: 3));
+  mySubscriber.pause();
+  print('Stream Paused');
+  await Future.delayed(Duration(seconds: 3));
+  mySubscriber.resume();
+  print('Stream Resumed');
+  await Future.delayed(Duration(seconds: 3));
+  mySubscriber.cancel();
+  print('Stream canceled');
+
+
 
   print('Main is finished');
 }
