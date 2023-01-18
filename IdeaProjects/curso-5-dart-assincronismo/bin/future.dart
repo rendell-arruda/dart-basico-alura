@@ -33,8 +33,7 @@ void main() {
     }
 
   }
-  myFutureErrorFunc(1, 2).then((value) => print('The value is: $value'));
+myFutureErrorFunc(1, 2).then((value) => print('The value is: $value'));
 
   print('Done with main');
 }
-
